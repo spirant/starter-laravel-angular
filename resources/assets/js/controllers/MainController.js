@@ -1,5 +1,5 @@
-angular.module('MainController', []).controller('MainController', ['$scope', '$location', '$localStorage', 'User',
-  function ($scope, $location, $localStorage, User) {
+angular.module('MainController', []).controller('MainController', ['$scope', '$location', '$localStorage', 'User', '$rootScope',
+  function ($scope, $location, $localStorage, User, $rootScope) {
     /**
      * Responsible for highlighting the currently active menu item in the navbar.
      *
@@ -37,5 +37,12 @@ angular.module('MainController', []).controller('MainController', ['$scope', '$l
       delete $localStorage.token;
       $scope.authenticatedUser = null;
     };
+
+    $rootScope.$on('unauthorized', function() {
+      $location.path('auth/login');
+        //main.currentUser = UserService.setCurrentUser(null);
+        //$state.go('login');
+    });
+
   }
 ]);

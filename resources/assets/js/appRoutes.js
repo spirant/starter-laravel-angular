@@ -27,17 +27,25 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', '
       function ($rootScope, $q, $localStorage) {
         return {
           request: function (config) {
+            config.params = config.params || {};
             config.headers = config.headers || {};
             if ($localStorage.token) {
               config.headers.Authorization = 'Bearer ' + $localStorage.token;
+              config.params.token = $localStorage.token; 
             }
             return config;
           },
           response: function (res) {
-            if (res.status === 401) {
-              // Handle unauthenticated user.
-            }
             return res || $q.when(res);
+          },
+          'responseError': function(response) {
+              if(response.status === 401 || response.status === 400) {
+                //console.log("Not logged in");
+                // Handle unauthenticated user
+                $rootScope.$broadcast('unauthorized');
+                //$location.path('auth/login');
+              }
+              return $q.reject(response);
           }
         };
       }

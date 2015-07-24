@@ -16,6 +16,7 @@ class Kernel extends HttpKernel {
 		'Illuminate\Session\Middleware\StartSession',
 		'Illuminate\View\Middleware\ShareErrorsFromSession',
 		// 'Todo\Http\Middleware\VerifyCsrfToken',
+
 	];
 
 	/**
@@ -27,6 +28,10 @@ class Kernel extends HttpKernel {
 		'auth' => 'Todo\Http\Middleware\Authenticate',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' => 'Todo\Http\Middleware\RedirectIfAuthenticated',
+
+		'spirant.jwt.auth' => 'Todo\Http\Middleware\SpirantJwtGetUserFromToken',
+		'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
+		'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
 	];
 
 }
